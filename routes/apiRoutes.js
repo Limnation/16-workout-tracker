@@ -18,7 +18,7 @@ router.get("/api/workouts", function (req, res) {
           0
         );
         return {
-          days: workout.days,
+          day: workout.day,
           _id: workout.id,
           exercises: workout.exercises,
           totalDuration,
@@ -53,7 +53,7 @@ router.get("/api/workouts/range", function (req, res) {
           0
         );
         return {
-          days: workout.days,
+          day: workout.day,
           _id: workout._id,
           exercises: workout.exercises,
           totalDuration,
