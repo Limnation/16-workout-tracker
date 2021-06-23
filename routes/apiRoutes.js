@@ -1,9 +1,16 @@
 const router = require("express").Router();
 const Workout = require("../models/workout.js");
 
+router.post("/api/workouts", function (req, res) {
+  Workout.create({})
+    .then((data) => res.json(data))
+    .catch((err) => {
+      res.json(err);
+    });
+});
+
 router.get("/api/workouts", function (req, res) {
   Workout.find()
-
     .then((data) => {
       const updatedData = data.map((workout) => {
         const totalDuration = workout.exercises.reduce(
@@ -11,7 +18,8 @@ router.get("/api/workouts", function (req, res) {
           0
         );
         return {
-          date: workout.date,
+          days: workout.days,
+          _id: workout.id,
           exercises: workout.exercises,
           totalDuration,
         };
@@ -45,7 +53,7 @@ router.get("/api/workouts/range", function (req, res) {
           0
         );
         return {
-          date: workout.date,
+          days: workout.days,
           _id: workout._id,
           exercises: workout.exercises,
           totalDuration,
@@ -55,16 +63,6 @@ router.get("/api/workouts/range", function (req, res) {
     })
     .catch((err) => {
       res.json(err);
-    });
-});
-
-router.get("/api/workouts", (req, res) => {
-  Workout.find({})
-    .then((dbWorkout) => {
-      res.json(dbWorkout);
-    })
-    .catch((err) => {
-      res.status(400).json(err);
     });
 });
 
