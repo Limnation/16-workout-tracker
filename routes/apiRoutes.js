@@ -45,15 +45,13 @@ router.get("/api/workouts", function (req, res) {
 //     });
 // });
 
-router.put("/api/workouts/:id", ({ params, body }, res) => {
+router.put("/api/workouts/:id", ({ body, params }, res) => {
   Workout.findByIdAndUpdate(
-    { _id: params.id },
+    params.id,
     { $push: { exercises: body } },
     { new: true, runValidators: true }
   )
-    .then((dbWorkout) => {
-      res.json(dbWorkout);
-    })
+    .then((data) => res.json(data))
     .catch((err) => {
       res.status(400).json(err);
     });
