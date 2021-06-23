@@ -10,7 +10,7 @@ app.use(morgan("dev"));
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(express.static(path.join(__dirname, "public")));
+// app.use(express.static(path.join(__dirname, "public")));
 
 mongoose.connect(
   process.env.MONGDB_URI || "mongodb://localhost/workout-tracker",
@@ -23,6 +23,7 @@ mongoose.connect(
 );
 
 app.use(require("./routes/apiRoutes.js"));
+app.use(require("./routes/htmlRoutes.js"));
 
 app.listen(PORT, function () {
   console.log(`App listening on Port ${PORT}`);
