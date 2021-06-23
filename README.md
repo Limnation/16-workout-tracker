@@ -10,6 +10,7 @@ The main objective in this project was to to build a workout tracker. This proje
 
 ![screenshot1](./assets/1.JPG)
 ![screenshot2](./assets/2.JPG)
+![screenshot2](./assets/3.JPG)
 
 # link to deployed application
 
