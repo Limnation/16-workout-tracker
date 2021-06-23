@@ -2,7 +2,9 @@ const router = require("express").Router();
 const Workout = require("../models/workout.js");
 
 router.post("/api/workouts", ({ body }, res) => {
-  Workout.create({ body })
+  db.Workout.aggregate({
+    $addFeilds: { totalDuration: { $sum: "$exercises.duration" } },
+  })
     .then((dbWorkout) => {
       res.json(dbWorkout);
     })
@@ -11,8 +13,18 @@ router.post("/api/workouts", ({ body }, res) => {
     });
 });
 
+// router.post("/api/workouts", ({ body }, res) => {
+//   Workout.create({ body })
+//     .then((dbWorkout) => {
+//       res.json(dbWorkout);
+//     })
+//     .catch((err) => {
+//       res.status(400).json(err);
+//     });
+// });
+
 router.put("/api/workouts/:id", ({ params, body }, res) => {
-  Workout.findOneAndUpdate(
+  Workout.findByIdAndUpdate(
     { _id: params.id },
     { $push: { exercises: body } },
     { new: true }
@@ -21,7 +33,7 @@ router.put("/api/workouts/:id", ({ params, body }, res) => {
       res.json(dbWorkout);
     })
     .catch((err) => {
-      res.json(err);
+      res.status(400).json(err);
     });
 });
 
@@ -32,7 +44,7 @@ router.get("/api/workouts/range", (req, res) => {
       res.json(dbWorkout);
     })
     .catch((err) => {
-      res.json(err);
+      res.status(400).json(err);
     });
 });
 
